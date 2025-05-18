@@ -97,6 +97,4 @@ python gui.py
 - If you encounter issues with dependencies, ensure your Python version is 3.8 or higher.
 - For GPU acceleration, ensure PyTorch is installed with CUDA support.
 
-## License
 
-MIT License
