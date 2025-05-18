@@ -1,0 +1,11 @@
+pdfplumber
+glob2
+langchain
+langchain-community
+openai
+chromadb
+gradio
+transformers    
+
+
+git+https://github.com/nari-labs/dia.git@main
