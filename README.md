@@ -44,7 +44,7 @@ This project is an AI-powered learning assistant that can answer questions from 
 
 ```sh
 git clone https://github.com/redkiros81294/AI-Learning-Assistant.git
-cd  Learning Assistant
+cd  AI-Learning-Assistant
 ```
 
 ### 2. Create and Activate a Virtual Environment
