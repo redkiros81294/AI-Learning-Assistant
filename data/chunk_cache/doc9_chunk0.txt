@@ -1,0 +1,1 @@
+a sequence of actions (a plan/path) which transforms the start state to a goal state

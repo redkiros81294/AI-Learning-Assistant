@@ -1,0 +1,161 @@
+§ A function that estimates how close a state is to a goal
+§ Designed for a particular search problem
+Examples: Manhattan distance, Euclidean distance for pathing
+
+
+h(x)
+
+§ Expand the node that seems closest…
+
+§ What can go wrong?
+
+Strategy: expand a node that you think is closest to a goal state
+Heuristic: estimate of distance to nearest goal for each state
+
+A common case: Best-first takes you straight to the (wrong) goal
+
+Worst-case: like a badly-guided DFS
+Time and Space Complexity: O(bm)
+Not Optimal: Global Optimum?
+
+§ Uniform-cost orders by path cost, or backward cost g(n)
+§ Greedy orders by goal proximity, or forward cost h(n)
+
+A* Search orders by the sum: f(n) = g(n) + h(n)
+
+Should we stop when we enqueue a goal?
+
+No: only stop when we dequeue a goal.
+
+What went wrong?
+Actual bad goal cost < estimated good goal cost
+We need estimates to be less than actual costs!
+
+Inadmissible (pessimistic) heuristics
+break optimality by trapping good plans on
+the fringe
+
+Admissible (optimistic) heuristics
+slow down bad plans but never
+outweigh true costs
+
+A heuristic h is admissible (optimistic) if:
+Where
+
+is the true cost to a nearest goal.
+
+Coming up with admissible heuristics is most of what’s involved in using A* in
+practice.
+Consistency? H(n) <= c(n,a,n’) + h(n’)
+H(n)-H(n’) <= C(n,a,n’)
+
+A heuristic h is admissible (optimistic) if:
+Where
+
+is the true cost to a nearest goal.
+
+Coming up with admissible heuristics is most of what’s involved in using A* in
+practice.
+Consistency? H(n) <= c(n,a,n’) + h(n’)
+H(n)-H(n’) <= C(n,a,n’)
+
+Assume:
+A is an optimal goal node
+B is a suboptimal goal node
+h is admissible
+Claim:
+
+A will exit the fringe before B
+
+• A* is cost-optimal, which we can be shown with a proof by contradiction.
+• Suppose the optimal path has cost C*, but the algorithm returns a path with cost C >C*.
+Then there must be some node nwhich is on the optimal path and is unexpanded
+(because if all the nodes on the optimal path had been expanded, then we would have
+returned that optimal solution).
+
+Proof:
+§ Imagine B is on the fringe.
+§ Some ancestor n of A is on the fringe, too (maybe A!).
+§ Claim: n will be expanded before B.
+1. f(n) is less or equal to f(A).
+
+Proof:
+§ Imagine B is on the fringe.
+§ Some ancestor n of A is on the fringe, too (maybe A!).
+§ Claim: n will be expanded before B.
+1. f(n) is less or equal to f(A)
+2. f(A) is less than f(B)
+
+Proof:
+§ Imagine B is on the fringe.
+§ Some ancestor n of A is on the fringe, too (maybe A!).
+§ Claim: n will be expanded before B.
+1. f(n) is less or equal to f(A)
+2. f(A) is less than f(B)
+3. n expands before B
+§ All ancestors of A expand before B
+§ A expands before B
+§ A* search is optimal
+
+§ Most of the work in solving hard search problems optimally is in coming up with
+admissible heuristics
+§ Often, admissible heuristics are solutions to relaxed problems, where new actions are
+available.
+
+ü Inadmissible heuristics are often useful too
+
+Uniform-cost expands equally in all “directions”
+
+A* expands mainly toward the goal, but does hedge its best to ensure
+optimality
+
+§ Video games
+§ Pathing / Routing problems
+§ Resource planning problems
+§ Robot motion planning
+§ Language analysis
+
+Dominance: h ≥ h
+a c
+
+if
+
+Heuristics form a semi-lattice:
+§ Max of admissible heuristics is admissible
+Trivial heuristics
+§ Bottom of lattice is the zero heuristic (what does this give
+us?)
+§ Top of lattice is the exact heuristic
+
+Tree Search: Extra Work!
+§ Failure to detect repeated states can cause exponentially more work.
+
+In BFS, for example, we shouldn’t bother expanding the circled nodes (why?)
+
+Idea: never expand a state twice
+How to implement:
+
+▪ Tree search + set of expanded states (“closed set”)
+▪ Expand the search tree node-by-node, but…
+
+▪ Before expanding a node, check to make sure its state has never been expanded
+before
+▪ If not new, skip it, if new add to closed set
+
+Important: store the closed set as a set, not a list; reducing overhead.
+Can graph search wreck completeness? Why/why not?
+How about optimality?
+
+Idea: never expand a state twice
+How to implement:
+
+▪ Tree search + set of expanded states (“closed set”)
+▪ Expand the search tree node-by-node, but…
+
+▪ Before expanding a node, check to make sure its state has never been expanded
+before
+▪ If not new, skip it, if new add to closed set
+
+Important: store the closed set as a set, not a list; reducing overhead.
+Can graph search wreck completeness? Why/why not?
+How about optimality?

@@ -1,0 +1,1 @@
+ü ▪ A state space ü Cities ▪ ▪ A successor function (with actions, costs) ü Roads: Go to adjacent city with cost = A start state and a goal test distance ▪ Arad ▪ Is state == Bucharest?

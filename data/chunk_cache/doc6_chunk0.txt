@@ -1,0 +1,1 @@
+An intelligent agent that finds solutions by searching for the best sequence of actions. Informed vs Uninformed : Known world ▪ ▪ ▪ Goal Formulation ▪ Problem Formulation (Abstraction) Search (simulated) Execution (Closed Loop vs Open Loop)

@@ -1,0 +1,1 @@
+: expand a deepest node first : Fringe is a LIFO stack

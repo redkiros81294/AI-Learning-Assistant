@@ -1,15 +1,20 @@
 # AI Learning Assistant
 
-This project is an AI-powered learning assistant that can answer questions from your PDF lecture notes, generate text answers, and optionally provide voice responses.
+An AI-powered assistant that answers questions from your lecture notes (PDF or TXT), provides concise document-based answers, can generate additional explanations using Google Gemini, and optionally reads answers aloud using TTS.  
+Accessible via a modern Gradio web interface.
+
+---
 
 ## Features
 
-- Extracts and preprocesses text from PDF files
-- Embeds and indexes lecture content for retrieval
-- Fine-tunes GPT-2 on your notes (optional)
-- Answers questions using retrieval or generative models
-- Converts answers to speech using Dia TTS
-- Simple Gradio web interface
+- **Document QA:** Answers questions using your own lecture notes (PDF/TXT).
+- **Semantic Search:** Embeds and indexes content for fast, relevant retrieval.
+- **Additional Help:** Optionally augments answers using Google Gemini (Gemini-Pro).
+- **Voice Output:** Converts document answers to speech (pyttsx3 TTS).
+- **Fine-tuning:** Optional GPT-2 fine-tuning on your notes.
+- **Modern UI:** Clean Gradio web interface.
+
+---
 
 ## Project Structure
 
@@ -30,13 +35,14 @@ This project is an AI-powered learning assistant that can answer questions from 
 │   ├── trainer.py
 │   └── voice.py
 └── data/
-    └── pdfs/
-        ├── Lecture 2.pdf
-        ├── Lecture 3 Informed Search.pdf
-        ├── Lecture 4 Adversarial Search.pdf
-        ├── Lecture 5 Uncertainity and Utility.pdf
-        └── Lecture 6 CSP.pdf
+    ├── pdfs/
+    ├── texts/
+    ├── audio/
+    ├── chunk_cache/
+    └── embeddings/
 ```
+
+---
 
 ## Setup Instructions
 
@@ -44,7 +50,7 @@ This project is an AI-powered learning assistant that can answer questions from 
 
 ```sh
 git clone https://github.com/redkiros81294/AI-Learning-Assistant.git
-cd  AI-Learning-Assistant
+cd AI-Learning-Assistant
 ```
 
 ### 2. Create and Activate a Virtual Environment
@@ -59,42 +65,84 @@ source venv/bin/activate
 ```sh
 pip install --upgrade pip
 pip install -r requirements.txt
-```
-
-### 4. Download spaCy Model
-
-```sh
 python -m spacy download en_core_web_sm
 ```
 
-### 5. Set Up Environment Variables
+### 4. Set Up Environment Variables
 
-- Edit `.env` and add your OpenAI API key:
-  ```
-  OPENAI_API_KEY="sk-..."
-  ```
+Create a `.env` file in the project root with the following (use your own Gemini API key):
 
-### 6. Add Your PDF Files
+```
+GEMINI_API_KEY=your-gemini-api-key-here
+```
 
-- Place your lecture PDFs in the `data/pdfs/` directory.
+> **Note:** OpenAI is no longer required for additional help; Gemini is now used.
 
-### 7. Run the Application
+### 5. Add Your Lecture Files
+
+- Place your PDF files in `data/pdfs/`
+- Place any plain text files in `data/texts/`
+
+### 6. Run the Application
 
 ```sh
 python gui.py
 ```
 
-- This will launch a Gradio web interface in your browser.
+- The Gradio web interface will open in your browser (default: http://127.0.0.1:7861).
 
-## Notes
+---
 
-- The first run will preprocess your PDFs and create `data/combined_notes.txt`.
-- Fine-tuning GPT-2 is optional and can be triggered via [`bot/trainer.py`](bot/trainer.py).
-- For TTS, the Dia model will be downloaded automatically.
+## Usage
+
+1. **Process Documents:** On first run, documents are automatically processed and indexed.
+2. **Ask Questions:** Enter your question in the UI.
+3. **Voice Response:** Check the box to get an audio answer (document answer only).
+4. **Additional Help:** Check the box to get a Gemini-powered explanation in addition to the document answer.
+
+---
+
+## Fine-tuning GPT-2 (Optional)
+
+You can fine-tune GPT-2 on your notes for custom generation:
+
+```sh
+python bot/trainer.py
+```
+Edit `bot/trainer.py` for your data and parameters.
+
+---
 
 ## Troubleshooting
 
-- If you encounter issues with dependencies, ensure your Python version is 3.8 or higher.
-- For GPU acceleration, ensure PyTorch is installed with CUDA support.
+- **Gemini API errors:** Ensure your API key is correct and you have access to Gemini-Pro.
+- **TTS issues:** Make sure your system supports `pyttsx3` (Linux: may require `espeak` or `libespeak`).
+- **spaCy errors:** Ensure `en_core_web_sm` is downloaded.
+- **CUDA errors:** If you don't have a GPU, the app will fall back to CPU automatically.
+
+---
+
+## Requirements
+
+- Python 3.8+
+- See `requirements.txt` for all dependencies.
+
+---
+
+## Credits
+
+- [Google Gemini](https://ai.google.dev/)
+- [spaCy](https://spacy.io/)
+- [HuggingFace Transformers](https://huggingface.co/transformers/)
+- [Gradio](https://gradio.app/)
+- [pyttsx3](https://pyttsx3.readthedocs.io/)
+
+---
+
+## License
+
+MIT License
+
+---
 
 

@@ -1,0 +1,1 @@
+: A mathematical representation of a search problem are (abstracted) world configurations § represent successors (action results) The is a set of goal nodes (maybe only one) ▪ We can rarely build this full graph in memory (it’s too big), but it’s a useful idea

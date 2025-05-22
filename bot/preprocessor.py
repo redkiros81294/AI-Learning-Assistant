@@ -1,35 +1,51 @@
-import itertools
-from typing import List
+import spacy
+from typing import List, Generator, Dict
+import gc
 
-def chunk_text(text: str, chunk_size: int = 1000, overlap: int = 10) -> List[str]:
-    """ 
-    split text into chunks of up to 'chunk_size' tokens (approx. words),
-    with 'overlap' words repeated between chunks.
-    """
+nlp = spacy.load("en_core_web_sm")
 
-    words = text.split()
+def chunk_text(text: str, chunk_size: int = 512, overlap: int = 64) -> List[str]:
+    doc = nlp(text)
+    sentences = [sent.text for sent in doc.sents]
+    
     chunks = []
-    start = 0
-    while start < len(words):
-        end = min(start + chunk_size, len(words))
-        chunk = words[start:end]
-        chunks.append(' '.join(chunk))
-        start = end - overlap
+    current_chunk = []
+    current_len = 0
+    
+    for sent in sentences:
+        sent_words = sent.split()
+        if current_len + len(sent_words) > chunk_size:
+            chunks.append(" ".join(current_chunk))
+            current_chunk = current_chunk[-overlap:]  # Carryover overlap
+            current_len = len(current_chunk)
+        current_chunk.extend(sent_words)
+        current_len += len(sent_words)
+    
+    if current_chunk:
+        chunks.append(" ".join(current_chunk))
+    
     return chunks
 
-def preprocess_documents(docs: List[dict]) -> List[dict]:
-    """
-   Given a list of {'source', 'page_number', 'text'},
-   return a list of {'source', 'page_number', 'chunk_id', 'text'}.
-    """
-    processed = []
+def preprocess_documents(docs: Generator[Dict, None, None], batch_size: int = 10) -> Generator[Dict, None, None]:
+    batch = []
     for doc in docs:
-        chunks = chunk_text(doc("text"))
+        batch.append(doc)
+        if len(batch) >= batch_size:
+            yield from _process_batch(batch)
+            batch = []
+            gc.collect()
+    
+    if batch:
+        yield from _process_batch(batch)
+        gc.collect()
+
+def _process_batch(batch: List[Dict]) -> Generator[Dict, None, None]:
+    for doc in batch:
+        chunks = chunk_text(doc["text"])
         for idx, chunk in enumerate(chunks):
-            processed.append({
+            yield {
                 'source': doc['source'],
                 'page_number': doc['page_number'],
                 'chunk_id': idx,
                 'text': chunk
-            })
-    return processed
+            }

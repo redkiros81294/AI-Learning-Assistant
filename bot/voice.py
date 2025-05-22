@@ -1,14 +1,45 @@
-from dia.model import Dia
+import os
+import logging
+import pyttsx3
+import threading
+from pathlib import Path
 
-tts_model = Dia.from_pretrained(
-    "nari-labs/Dia-1.6B",
-    compute_dtype="float16"
-)
+logger = logging.getLogger(__name__)
 
-def text_to_speech(text: str, output_path: str):
-    """Generate TTS audio from text and save it to 'output_path'."""
-    # wrap in [S1]/[S2] tags for single speaker prompt
-    prompt = f"[S1]{text}"
-    audio = tts_model.generate(prompt, use_torch_compile=True)
-    tts_model.save_audio(output_path, audio)
-    return output_path
+class VoiceGenerator:
+    def __init__(self):
+        self.engine = pyttsx3.init()
+        self.engine.setProperty('rate', 150)
+        self.lock = threading.Lock()
+    
+    # def generate_async(self, text: str, path: str) -> threading.Thread:
+    #     def _generate():
+    #         try:
+    #             os.makedirs(os.path.dirname(path), exist_ok=True)
+    #             with self.lock:
+    #                 if Path(path).exists():
+    #                     Path(path).unlink()
+    #                 self.engine.save_to_file(text, path)
+    #                 self.engine.runAndWait()
+    #                 logger.info(f"Audio saved to {path}")
+    #         except Exception as e:
+    #             logger.error(f"Voice generation failed: {str(e)}")
+
+    #     thread = threading.Thread(target=_generate)
+    #     thread.start()
+    #     return thread
+    def generate_async(self, text: str, path: str) -> threading.Thread:
+        def _generate():
+            try:
+                self.engine.save_to_file(text, path)
+                self.engine.runAndWait()
+                if not Path(path).exists():
+                    raise FileNotFoundError(f"Audio file {path} not created")
+                logger.info(f"Audio saved to {path}")
+            except Exception as e:
+                logger.error(f"Voice failed: {str(e)}")
+                if Path(path).exists():
+                    Path(path).unlink()
+        thread = threading.Thread(target=_generate)
+        thread.start()
+        return thread

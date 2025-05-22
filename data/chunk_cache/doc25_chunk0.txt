@@ -1,0 +1,1 @@
+a G : expand a shallowest node first b c : Fringe is a FIFO queue e d f S h p r q

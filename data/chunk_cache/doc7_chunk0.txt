@@ -1,0 +1,1 @@
+▪ ▪ Choose action based on current percept (and maybe memory) ▪ May have memory or a model of the world’s current state Do not consider the future consequences of their actions

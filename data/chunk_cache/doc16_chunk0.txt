@@ -1,0 +1,1 @@
+▪ ▪ Expand out potential plans (tree nodes) ▪ Maintain a fringe/frontier of partial plans under consideration Try to expand as few tree nodes as possible

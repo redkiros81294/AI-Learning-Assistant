@@ -1,0 +1,1 @@
+No clue about how close a state is to the goal(s). Have information on how to traverse or visit the nodes in the tree.
