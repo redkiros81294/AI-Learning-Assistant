@@ -1,1 +1,0 @@
-▪ Processes all nodes with cost less than cheapest C* ε , ▪ solution! C*/ε If that solution costs and arcs cost at least then the C*/ε ▪ “effective depth” is roughly Takes time O(b ) (exponential in effective depth) C*/ε ▪ Has roughly the last tier, so O(b ) ▪ Assuming best solution has a finite cost and minimum arc cost is positive, yes! ▪ Yes! (Proof next lecture via A*)

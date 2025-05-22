@@ -1,1 +1,0 @@
-: A mathematical representation of a G a search problem c b are (abstracted) world configurations § e represent successors (action results) d f The is a set of goal nodes (maybe only S h one) p r q ▪ Tiny state space graph for a tiny search problem We can rarely build this full graph in memory (it’s too big), but it’s a useful idea

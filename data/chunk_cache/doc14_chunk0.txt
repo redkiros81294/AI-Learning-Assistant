@@ -1,1 +1,0 @@
-▪ ▪ A “what if” tree of plans and their outcomes ▪ The start state is the root node ▪ Children correspond to successors ▪ Nodes show states, but correspond to PLANS that achieve those states For most problems, we can never actually build the whole tree

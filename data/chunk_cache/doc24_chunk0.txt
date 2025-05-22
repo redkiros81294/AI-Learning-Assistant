@@ -1,1 +1,0 @@
-- - O- ptimal when all action cost is the same. N- ode Expansion sequence - Root, successors of the root, next successors - Complete in infinite state spaces. Is Best first search where f(n) is the depth. Good efficiency FIFO queue

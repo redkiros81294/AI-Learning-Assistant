@@ -1,1 +1,0 @@
-The world state includes every last detail of the environment. A search state/search tree keeps only the details needed for planning (abstraction). § ▪ § ▪ States: (x,y) location States: {(x,y), dot booleans} § ▪ Actions: NSEW Actions: NSEW § Successor: update location only Successor: update location and ▪ Goal test: is (x,y)=END possibly a dot boolean Goal test: dots all false

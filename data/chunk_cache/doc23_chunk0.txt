@@ -1,1 +1,0 @@
-▪ ▪ Some left prefix of the tree. ▪ Could process the whole tree! m If m is finite, takes time O(b ) ▪ Only has siblings on path to root, so O(bm) ▪ m could be infinite, so only if we prevent ▪ cycles (more later) Incomplete: in infinite state spaces ▪ No, it finds the “leftmost” solution, regardless of depth or cost

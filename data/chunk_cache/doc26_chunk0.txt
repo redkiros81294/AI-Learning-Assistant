@@ -1,1 +1,0 @@
-▪ ▪ Processes all nodes above shallowest solution ▪ O(bs) Let depth of shallowest solution be s Search takes time ▪ ▪ s Has roughly the last tier, so O(b ) The memory requirements are higher than time requirements. ▪ s must be finite if a solution exists, so yes! ▪ Only if costs are all 1 (more on costs later)
