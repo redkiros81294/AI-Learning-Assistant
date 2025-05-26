@@ -4,6 +4,7 @@ from bot.loader import load_documents_from_dir
 from bot.embedder import Embedder
 from bot.generator import AnswerGenerator
 from bot.voice import VoiceGenerator
+from bot.pdf_qa_module import PDFQASystem
 import logging
 import gc
 import torch
@@ -16,6 +17,9 @@ logger = logging.getLogger(__name__)
 _EMBEDDER = None
 _GENERATOR = AnswerGenerator()
 _VOICE = VoiceGenerator()
+_PDF_QA = PDFQASystem()
+
+PDF_CONTEXT = _PDF_QA.load_pdfs_from_directory("data/pdfs")
 
 def get_embedder():
     global _EMBEDDER
@@ -94,7 +98,11 @@ def handle_query(question, use_voice, get_help):
 
         # External help (GPT) - always if checked
         if get_help:
-            help_answer = _GENERATOR.get_external_answer(question)
+    # Use Gemini on PDF context for additional help
+            if PDF_CONTEXT:
+                help_answer = _PDF_QA.get_explained_answer(question, PDF_CONTEXT)
+            else:
+                help_answer = "No PDF context loaded for Gemini."
 
     except Exception as e:
         logger.error(f"Query failed: {str(e)}")
