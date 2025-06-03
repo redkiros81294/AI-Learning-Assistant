@@ -139,10 +139,5 @@ Edit `bot/trainer.py` for your data and parameters.
 
 ---
 
-## License
-
-MIT License
-
----
 
 
