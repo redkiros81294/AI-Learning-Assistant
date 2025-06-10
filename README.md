@@ -6,27 +6,27 @@ A sophisticated AI-powered document question-answering system that transforms yo
 ## 🌟 Key Features
 
 ### 📚 **Multi-Format Document Processing**
-- **PDF Intelligence**: Advanced PDF text extraction using `pdfplumber` [1](#0-0) 
+- **PDF Intelligence**: Advanced PDF text extraction using `pdfplumber` 
 - **Text File Support**: Direct processing of plain text lecture notes
 - **Semantic Chunking**: Intelligent document segmentation using spaCy NLP models
 
 ### 🔍 **Advanced Search & Retrieval**
-- **Vector Embeddings**: Powered by sentence-transformers for semantic understanding [2](#0-1) 
+- **Vector Embeddings**: Powered by sentence-transformers for semantic understanding 
 - **FAISS Indexing**: Lightning-fast similarity search across your document corpus
 - **Context-Aware Retrieval**: Finds relevant information even with paraphrased queries
 
 ### 🧠 **Hybrid AI Generation**
 - **Local Processing**: Transformers-based answer generation for privacy
-- **Enhanced Explanations**: Google Gemini integration for comprehensive responses [3](#0-2) 
+- **Enhanced Explanations**: Google Gemini integration for comprehensive responses 
 - **Fallback Architecture**: Graceful degradation when external services are unavailable
 
 ### 🎵 **Multi-Engine Voice Synthesis**
-- **Primary TTS**: pyttsx3 for reliable cross-platform speech synthesis [4](#0-3) 
+- **Primary TTS**: pyttsx3 for reliable cross-platform speech synthesis 
 - **Advanced TTS**: Coqui TTS engine for high-quality voice output
 - **Accessibility**: Full audio responses for enhanced learning accessibility
 
 ### 🎨 **Modern Web Interface**
-- **Gradio Framework**: Clean, responsive web interface [5](#0-4) 
+- **Gradio Framework**: Clean, responsive web interface 
 - **Real-time Processing**: Live document indexing and query processing
 - **User-Friendly**: Intuitive design for seamless interaction
 
@@ -123,7 +123,7 @@ AI-Learning-Assistant/
    python gui.py
    ```
    
-   Access the interface at: http://127.0.0.1:7861 [6](#0-5) 
+   Access the interface at: http://127.0.0.1:7861 
 
 ## 💡 Usage Examples
 
@@ -132,17 +132,17 @@ AI-Learning-Assistant/
 - **Response**: Document-based answer with relevant context from your lecture notes
 
 ### Enhanced Explanations
-- Enable "Additional Help" for Gemini-powered detailed explanations [7](#0-6) 
+- Enable "Additional Help" for Gemini-powered detailed explanations 
 - Get both document-specific answers and broader conceptual explanations
 
 ### Voice Learning
-- Check "Voice Response" for audio answers [8](#0-7) 
+- Check "Voice Response" for audio answers 
 - Perfect for auditory learners and accessibility needs
 
 ## 🔧 Advanced Features
 
 ### Custom Model Fine-tuning
-Fine-tune GPT-2 on your specific lecture content: [9](#0-8) 
+Fine-tune GPT-2 on your specific lecture content: 
 ```bash
 python bot/trainer.py
 ```
@@ -169,7 +169,7 @@ python bot/trainer.py
 
 ## 🔍 Sample Educational Content
 
-The repository includes demonstration materials covering advanced AI topics: [10](#0-9) 
+The repository includes demonstration materials covering advanced AI topics: 
 
 - **Search Algorithms**: A* search, minimax, alpha-beta pruning
 - **Constraint Satisfaction**: CSP formulation, backtracking, arc consistency  
@@ -181,10 +181,10 @@ The repository includes demonstration materials covering advanced AI topics: [10
 
 | Issue | Solution |
 |-------|----------|
-| **Gemini API Errors** | Verify API key in `.env` file [11](#0-10)  |
-| **TTS Not Working** | Install system dependencies: `sudo apt-get install espeak` [12](#0-11)  |
-| **spaCy Model Missing** | Run: `python -m spacy download en_core_web_sm` [13](#0-12)  |
-| **CUDA Errors** | System automatically falls back to CPU processing [14](#0-13)  |
+| **Gemini API Errors** | Verify API key in `.env` file   |
+| **TTS Not Working** | Install system dependencies: `sudo apt-get install espeak`   |
+| **spaCy Model Missing** | Run: `python -m spacy download en_core_web_sm`   |
+| **CUDA Errors** | System automatically falls back to CPU processing   |
 
 ## 🤝 Contributing
 
@@ -197,13 +197,12 @@ We welcome contributions! Areas for enhancement:
 ## 📄 License & Credits
 
 Built with powerful open-source technologies:
-- [Google Gemini](https://ai.google.dev/) - Advanced AI capabilities [15](#0-14) 
-- [HuggingFace Transformers](https://huggingface.co/transformers/) - ML models [16](#0-15) 
-- [Gradio](https://gradio.app/) - Web interface framework [17](#0-16) 
-- [spaCy](https://spacy.io/) - Industrial-strength NLP [18](#0-17) 
+- [Google Gemini](https://ai.google.dev/) - Advanced AI capabilities [15] 
+- [HuggingFace Transformers](https://huggingface.co/transformers/) - ML models  
+- [Gradio](https://gradio.app/) - Web interface framework  
+- [spaCy](https://spacy.io/) - Industrial-strength NLP  
 
 ---
 
 **Transform your learning experience with AI-powered document intelligence.** 🎓✨
-```
 
