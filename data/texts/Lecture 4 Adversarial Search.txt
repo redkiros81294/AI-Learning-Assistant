@@ -1,0 +1,619 @@
+
+Game Playing State-of-the-Art
+
+1950: First computer player
+1959: Samuel’s self-taught program
+1994: First computer champion: Chinook ended 40-yearreign of human champion Marion Tinsley using complete 8piece endgame.
+2007: Checkers solved!
+
+Chess:
+Go:
+
+1945-1960: Zuse, Wiener, Shannon, Turing,
+Newell&Simon, McCarthy
+1960-1996: gradual improvements
+1997: Deep Blue defeats human champion Gary Kasparov
+in a six-game match
+2024: Stockfish rating 3631 (vs 2847 for Magnus Carlsen)
+1968: Zobrist’s program plays legal Go, barely (b>300!)
+1968-2005: various ad hoc approaches tried, novice level
+2005-2014: Monte Carlo tree search -> strong amateur
+2017-2017: Alphago defeats human world champion
+2022: human exploits NN weakness to defeat top Go
+programs
+
+Checkers:
+
+Game Playing State-of-the-Art
+
+1950: First computer player
+1959: Samuel’s self-taught program
+1994: First computer champion: Chinook ended 40-yearreign of human champion Marion Tinsley using complete
+8-piece endgame.
+2007: Checkers solved!
+
+Chess:
+Go:
+
+1945-1960: Zuse, Wiener, Shannon, Turing,
+Newell&Simon, McCarthy
+1960-1996: gradual improvements
+1997: Deep Blue defeats human champion Gary Kasparov
+in a six-game match
+2024: Stockfish rating 3631 (vs 2847 for Magnus Carlsen)
+1968: Zobrist’s program plays legal Go, barely (b>300!)
+1968-2005: various ad hoc approaches tried, novice level
+2005-2014: Monte Carlo tree search -> strong amateur
+2017-2017: Alphago defeats human world champion
+2022: human exploits NN weakness to defeat top Go
+programs
+
+Pacman:
+
+Types of Games
+
+Zero-Sum Games
+
+Agents have opposite utilities (values
+on outcomes)
+Lets us think of a single value that one
+maximizes and the other minimizes
+Adversarial, pure competition
+
+General Games
+
+ Agents have independent utilities (values on
+outcomes)
+ Cooperation, indifference, competition, and more
+are all possible
+ We don’t make AI to act in isolation, it should a) work
+around people and b) help people
+ That means that every AI agent needs to solve a game
+
+Types of Games
+
+ Many different kinds of games!
+ Axes:
+
+ Zero sum?
+ Deterministic or stochastic?
+ One, two, or more players?
+ Perfect information (can you see the state)?
+
+ Want algorithms for calculating a strategy (policy) which
+recommends a move from each state --- i.e. not just a sequence of
+actions
+
+Adversarial Games:
+Deterministic, 2-player, zero-sum, perfect information
+
+Formalization
+
+Our formalization of adversarial games:
+ States: S (start at s0)
+ Players: P={MAX, MIN}
+ Actions: A (may depend on player / state)
+ Transition Function: SxA
+S
+ Terminal Test: S
+{true, false}
+ Terminal Utilities: S
+R (R= ”Reward” = ~score)
+MAX maximizes R
+MIN minimizes R
+Solution for a player is a policy: S
+
+A
+
+Single-Agent Trees
+
+8
+
+2
+
+0
+
+…
+
+2
+
+6
+
+…
+
+4
+
+6
+
+Value of a State
+
+Value of a state: The best
+achievable outcome
+(utility) from that state
+
+Non-Terminal States:
+
+8
+
+2
+
+0
+
+…
+
+2
+
+6
+
+…
+
+4
+
+6
+
+Terminal States:
+
+Adversarial Game Trees
+
+-20
+
+-8
+
+…
+
+-18
+
+-5
+
+…
+
+-10
+
++4
+
+-20
+
++8
+
+States Under Agent’s Control:
+
+-8
+
+Minimax Values
+
+States Under Opponent’s Control:
+
+-5
+
+-10
+
+Terminal States:
+
++8
+
+Tic-Tac-Toe Game Tree
+
+Adversarial Search (Minimax)
+
+ Deterministic, zero-sum games:
+ Tic-tac-toe, chess, checkers
+ One player maximizes result
+ The other minimizes result
+
+ Minimax search:
+ A state-space search tree
+ Players alternate turns
+ Compute each node’s minimax value:
+the best achievable utility against a
+rational (optimal) adversary
+
+Minimax values:
+computed recursively
+5
+
+max
+
+5
+
+2
+
+8
+
+2
+
+5
+
+Terminal values:
+part of the game
+
+min
+
+6
+
+Minimax Implementation
+
+def max-value(state):
+initialize v = -∞
+for each successor of state:
+v = max(v, min-value(successor))
+return v
+
+def min-value(state):
+initialize v = +∞
+for each successor of state:
+v = min(v, max-value(successor))
+return v
+
+Minimax Implementation (Dispatch)
+def value(state):
+if the state is a terminal state: return the state’s utility
+if the next agent is MAX: return max-value(state)
+if the next agent is MIN: return min-value(state)
+
+def max-value(state):
+initialize v = -∞
+for each successor of state:
+v = max(v, value(successor))
+return v
+
+def min-value(state):
+initialize v = +∞
+for each successor of state:
+v = min(v, value(successor))
+return v
+
+Minimax Example
+
+3
+
+12
+
+8
+
+2
+
+4
+
+6
+
+14
+
+5
+
+2
+
+Minimax Properties
+max
+
+min
+
+10
+
+10
+
+Optimal against a perfect player.
+
+9
+
+100
+
+Otherwise?
+
+Minimax Efficiency
+ How efficient is minimax?
+ Just like (exhaustive) DFS
+ Time: O(bm)
+ Space: O(bm)
+
+ Example: For chess, b =35, m=100
+
+ Exact solution is completely infeasible
+ But, do we need to explore the whole
+tree?
+
+Resource Limits
+
+Game Tree Pruning
+
+Minimax Example
+
+3
+
+12
+
+8
+
+2
+
+4
+
+6
+
+14
+
+5
+
+2
+
+Minimax Pruning
+
+3
+
+12
+
+8
+
+2
+
+14
+
+5
+
+2
+
+Alpha-Beta Pruning
+
+ General configuration (MIN version)
+
+ We’re computing the MIN-VALUE at some node n
+ We’re looping over n’s children
+
+MAX
+
+ n’s estimate of the childrens’ min is dropping
+
+MIN
+
+ If n becomes worse than a, MAX will avoid it, so we
+can stop considering n’s other children (it’s already
+bad enough that it won’t be played)
+
+MAX
+
+ Who cares about n’s value? MAX
+
+ Let a be the best value that MAX can get at any choice
+point along the current path from the root
+
+ MAX version is symmetric
+
+MIN
+
+a
+
+n
+
+Alpha-Beta Implementation
+α: MAX’s best option on path to root
+β: MIN’s best option on path to root
+
+def max-value(state, α, β):
+initialize v = -∞
+for each successor of state:
+v = max(v, value(successor, α, β))
+if v ≥ β return v
+α = max(α, v)
+return v
+
+def min-value(state , α, β):
+initialize v = +∞
+for each successor of state:
+v = min(v, value(successor, α, β))
+if v ≤ α return v
+β = min(β, v)
+return v
+
+Alpha-Beta Pruning Properties
+
+ This pruning has no effect on minimax value computed for the
+root!
+ Values of intermediate nodes might be wrong
+ Important: children of the root may have the wrong value
+ Important: tie-break for action selection to favor the earlier node
+explored
+
+max
+
+min
+
+ Good child ordering improves effectiveness of pruning
+ With “perfect ordering”:
+
+ Time complexity drops to O(bm/2)
+ Doubles solvable depth!
+ Full search of, e.g. chess, is still
+hopeless…
+
+10
+
+10
+
+0
+
+ This is a simple example of metareasoning (computing about what to compute)
+
+Alpha-Beta Quiz
+
+Alpha-Beta Quiz 2
+
+Alpha-Beta Quiz 2
+10
+
+10
+
+<=2
+
+>=100
+
+2
+
+Resource Limits
+
+ Problem: In realistic games, cannot search to leaves!
+ Solution: Depth-limited search
+
+ Instead, search only to a limited depth in the tree
+ Replace terminal utilities with an evaluation function
+for non-terminal positions
+
+max
+
+4
+-2
+
+4
+
+-1
+
+-2
+
+4
+
+?
+
+?
+
+?
+
+min
+9
+
+ Example:
+
+ Suppose we have 100 seconds, can explore 10K nodes /
+sec
+ So can check 1M nodes per move
+
+- reaches about depth 8 – decent chess program
+
+ Guarantee of optimal play is gone
+
+ More plies makes a BIG difference
+
+ Use iterative deepening for an anytime
+algorithm
+
+?
+
+Evaluation Functions
+
+ Evaluation functions score non-terminals in depth-limited search
+
+ Ideal function: returns the actual minimax value of the position
+ In practice: typically weighted linear sum of features:
+ e.g. f1(s) = (num white queens – num black queens), etc.
+
+Pitfall: Thrashing with Bad Evaluation Function
+
+ A danger of depth-limited search with not-so-great evaluation functions
+
+ Pacman knows his score will go up by eating the dot now (west, east)
+ Pacman knows his score will go up just as much by eating the dot later (east, west)
+ There are no point-scoring opportunities after eating the dot (within the horizon, two here)
+ Therefore, waiting seems just as good as eating: he may go east, then back west in the next
+round of replanning!
+
+Depth Matters
+
+ Evaluation functions are
+always imperfect
+ The deeper in the tree the
+evaluation function is buried,
+the less the quality of the
+evaluation function matters
+ An important example of the
+tradeoff between complexity
+of features and complexity of
+computation
+
+\
+
+Iterative Deepening
+
+Iterative deepening using Minimax (or AlphaBeta) as
+subroutine: Until run out of time:
+
+1. Do a Minimax up to depth 1, using evaluation function at depth 1
+2. Do a Minimax up to depth 2, using evaluation function at depth 2
+3. Do a Minimax up to depth 3, using evaluation function at depth 3
+4. Do a Minimax up to depth 4, using evaluation function at depth 4
+…
+When out of time:
+Return the result from the deepest search that was fully completed
+
+…
+
+b
+
+Synergies between Evaluation Function and Alpha-Beta?
+ Alpha-Beta: amount of pruning depends on expansion ordering
+
+ Evaluation function can provide guidance to expand most promising nodes first (which later
+makes it more likely there is already a good alternative on the path to the root)
+ (somewhat similar to role of A* heuristic, CSPs filtering)
+
+ Alpha-Beta: (similar for roles of min-max swapped)
+
+ Value at a min-node will only keep going down
+ Once value of min-node lower than better option for max along path to root, can prune
+ Hence: IF evaluation function provides upper-bound on value at min-node, and upper-bound
+already
+lower than better option for max along path to
+root THEN can prune
+
+MiniMiniMax and Emerging Coordination
+
+ Minimax can be extended to more than 2
+players
+
+min
+
+ e.g. 2 ghosts and 1 pacman
+
+min
+
+ Result: even though the 2 ghosts independently
+run their own MiniMiniMax search, they will
+naturally coordinate because:
+
+…
+max
+
+ They optimize the same objective
+ They know they optimize the same objective (i.e.
+they know the other ghost is also a minimizer)
+
+…
+min
+…
+min
+…
+
+…
+
+Summary
+
+ Games are decision problems with 2 or more agents
+
+ Huge variety of issues and phenomena depending on details of interactions and payoffs
+
+ For zero-sum games, optimal decisions defined by minimax
+ Implementable as a depth-first traversal of the game tree
+ Time complexity O(bm), space complexity O(bm)
+
+ Alpha-beta pruning
+
+ Preserves optimal choice at the root
+ alpha/beta values keep track of best obtainable values from any max/min nodes on path from root to current node
+ Time complexity drops to O(bm/2) with ideal node ordering
+
+ Exact solution is impossible even for “small” games like chess
+ Evaluation function
+ Iterative deepening (i.e. go as deep as time allows)
+
+ Emergence of coordination:
+
+ For 3 or more agents (all MIN or MAX agents), coordination will naturally emerge from each independently optimizing
+their actions through search, as long as they know for each other agent whether they are MIN or MAX
+
+

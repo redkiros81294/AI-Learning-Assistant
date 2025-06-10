@@ -1,0 +1,40 @@
+# Ignore all generated data except source PDFs and texts
+data/audio/
+data/chunk_cache/
+data/embeddings/
+data/combined_notes.txt
+
+# If you want to ignore all files in data/ except pdfs and texts:
+# (Uncomment the next two lines if you want to keep empty folders in git)
+# data/*
+# !data/pdfs/
+# !data/texts/
+
+# If you want to keep the folders but ignore their contents except for .gitkeep (if you use it):
+data/audio/*
+data/chunk_cache/*
+data/embeddings/*
+!data/pdfs/
+!data/texts/
+
+# (Optional) If you want to keep the folders in git, add a .gitkeep file to each
+
+# Existing ignores
+__pycache__/
+*.py[cod]
+*.so
+venv/
+ENV/
+env/
+.venv/
+.env
+model/
+*.pt
+*.bin
+*.h5
+*.ckpt
+gradio_cached_examples/
+.DS_Store
+Thumbs.db
+*.log
+.ipynb_checkpoints/
