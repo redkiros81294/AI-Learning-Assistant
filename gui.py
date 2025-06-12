@@ -11,6 +11,7 @@ import gc
 import torch
 import hashlib
 import re
+import spacy
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -22,6 +23,8 @@ _VOICE = VoiceGenerator()
 _PDF_QA = PDFQASystem()
 
 PDF_CONTEXT = _PDF_QA.load_pdfs_from_directory("data/pdfs")
+
+nlp = spacy.load("en_core_web_sm")
 
 def get_embedder():
     global _EMBEDDER
@@ -47,6 +50,14 @@ def process_documents():
         return f"❌ Failed to load documents: {str(e)}"
 
 
+def answer_quality(question, answer, min_len=20):
+    # Simple semantic similarity + length check
+    q_doc = nlp(question)
+    a_doc = nlp(answer)
+    sim = q_doc.similarity(a_doc)
+    # You can add more sophisticated checks here
+    return sim > 0.7 and len(answer.split()) > min_len
+
 def handle_query(question, use_voice, get_help):
     emb = get_embedder()
     base_answer = "No relevant information found"
@@ -54,16 +65,26 @@ def handle_query(question, use_voice, get_help):
     audio = None
 
     try:
-        # Query embedding and answer generation (unchanged)...
-        hits = emb.query(question, top_k=3)
-        contexts = []
+        hits = emb.query(question, top_k=5)  # Get more candidates
+        best_score = 0
+        best_answer = None
+
         for doc_id, chunk_id in hits:
-            contexts.append(emb.get_chunk_text(doc_id, chunk_id))
-        if contexts:
-            combined_context = "\n\n".join(contexts)
-            base_answer = _GENERATOR.extract_answer(combined_context, question)
+            context = emb.get_chunk_text(doc_id, chunk_id)
+            candidate = _GENERATOR.extract_answer(context, question)
+            # Score the candidate
+            q_doc = nlp(question)
+            a_doc = nlp(candidate)
+            sim = q_doc.similarity(a_doc)
+            if sim > best_score:
+                best_score = sim
+                best_answer = candidate
+            if answer_quality(question, candidate):
+                base_answer = candidate
+                break
         else:
-            base_answer = "No relevant information found in documents."
+            # If none passed the quality check, use the best-scoring one
+            base_answer = best_answer or "No relevant information found in documents."
 
         # Voice generation
         if use_voice and base_answer and "no relevant" not in base_answer.lower():

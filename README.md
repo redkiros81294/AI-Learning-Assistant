@@ -1,4 +1,3 @@
-
 # 🤖 AI Learning Assistant
 
 A sophisticated AI-powered document question-answering system that transforms your lecture notes and academic materials into an intelligent, interactive learning companion. Built with modern RAG (Retrieval-Augmented Generation) architecture, this system combines local document processing with external AI services to provide accurate, contextual answers with optional voice synthesis.
@@ -71,7 +70,6 @@ AI-Learning-Assistant/
 │   ├── generator.py         # Answer generation pipeline
 │   ├── voice.py             # Text-to-speech synthesis
 │   ├── nlp.py              # Natural language processing
-│   └── trainer.py          # Optional GPT-2 fine-tuning
 │
 └── 📚 data/                  # Data storage and cache
     ├── pdfs/               # Input PDF documents
@@ -140,12 +138,6 @@ AI-Learning-Assistant/
 - Perfect for auditory learners and accessibility needs
 
 ## 🔧 Advanced Features
-
-### Custom Model Fine-tuning
-Fine-tune GPT-2 on your specific lecture content: 
-```bash
-python bot/trainer.py
-```
 
 ### Performance Optimization
 - **GPU Acceleration**: Automatic CUDA detection for faster processing
